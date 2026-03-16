@@ -15,6 +15,9 @@ Full template library for Prompt Master. Read the relevant template when the use
 | [G — File-Scope](#template-g--file-scope) | Cursor, Windsurf, Copilot — code editing AI |
 | [H — ReAct + Stop Conditions](#template-h--react--stop-conditions) | Claude Code, Devin — autonomous agents |
 | [I — Visual Descriptor](#template-i--visual-descriptor) | Midjourney, DALL-E, Stable Diffusion, Sora |
+| [J — Reference Image Editing](#template-j--reference-image-editing) | Editing an existing image with a reference |
+| [K — ComfyUI](#template-k--comfyui) | ComfyUI node-based image workflows |
+| [L — Prompt Decompiler](#template-l--prompt-decompiler) | Breaking down, adapting, or splitting existing prompts |
 
 ---
 
@@ -273,3 +276,120 @@ Style Reference: [artist / film / aesthetic reference if applicable]
 - **Stable Diffusion**: Use `(word:1.3)` weight syntax. CFG scale 7 to 12. Negative prompt is mandatory.
 - **DALL-E 3**: Prose works well. Add "do not include any text in the image" unless text is needed.
 - **Sora / video**: Add camera movement (slow dolly, static shot, crane up), duration in seconds, and cut style.
+
+---
+
+## Template J — Reference Image Editing
+
+*Use when the user has an existing image they want to modify. Completely different from generation — never describe the whole scene from scratch, only describe the change.*
+
+**Before writing the prompt, always tell the user:**
+"Attach your reference image to [tool name] before sending this prompt."
+
+**Detect the tool's editing capability:**
+- Midjourney: use `--cref [image URL]` for character reference or `--sref` for style reference
+- DALL-E 3: use the Edit endpoint, not the Generate endpoint. User must be in ChatGPT with image editing enabled
+- Stable Diffusion: use img2img mode, not txt2img. Set denoising strength 0.3-0.6 to preserve the original
+
+```
+Reference image: [attached / URL]
+What to keep exactly the same: [list everything that must not change]
+What to change: [specific edit only — be precise]
+How much to change: [subtle / moderate / significant]
+Style consistency: maintain the exact style, lighting, and mood of the reference
+Negative prompt: [what to avoid introducing]
+```
+
+**Example:**
+```
+Reference image: [attached portrait photo]
+What to keep exactly the same: face, hair, clothing, background, lighting
+What to change: head angle — rotate from facing left to facing straight forward
+How much to change: subtle, preserve all facial features exactly
+Style consistency: maintain photorealistic style, same lighting direction
+Negative prompt: no new elements, no style changes, no background changes
+```
+
+---
+
+## Template K — ComfyUI
+
+*Use for ComfyUI node-based workflows. Always output Positive and Negative prompts as separate blocks. Ask for the checkpoint model before writing — syntax and token limits differ per model.*
+
+**Ask first if not stated:**
+"Which checkpoint model are you using? (SD 1.5, SDXL, Flux, or other)"
+
+**Model-specific notes:**
+- SD 1.5: shorter prompts work better, under 75 tokens per block, use (word:weight) syntax
+- SDXL: handles longer prompts, supports more natural language alongside weighted syntax
+- Flux: natural language works well, less reliance on weighted syntax, very responsive to style descriptions
+
+```
+POSITIVE PROMPT:
+[subject], [style], [mood], [lighting], [composition], [quality boosters: highly detailed, sharp focus, 8k]
+
+NEGATIVE PROMPT:
+[what to exclude: blurry, low quality, watermark, extra limbs, bad anatomy, distorted, oversaturated]
+
+CHECKPOINT: [model name]
+SAMPLER: Euler a (recommended starting point)
+CFG SCALE: 7 (increase for stricter prompt adherence)
+STEPS: 20-30
+RESOLUTION: [width x height — must be divisible by 64]
+```
+
+---
+
+## Template L — Prompt Decompiler
+
+*Use when the user pastes an existing prompt and wants to break it down, adapt it for a different tool, simplify it, or understand its structure. This is analysis and adaptation, not building from scratch.*
+
+**Detect which Decompiler task is needed:**
+- **Break down** — explain what each part of the prompt does
+- **Adapt** — rewrite for a different tool while preserving intent
+- **Simplify** — remove redundancy and tighten without losing meaning
+- **Split** — divide a complex one-shot prompt into a cleaner sequence
+
+**For Adapt tasks, always ask:**
+"What tool is the original prompt from, and what tool are you adapting it for?"
+
+**Break down output format:**
+```
+Original prompt: [paste]
+
+Structure analysis:
+- Role/Identity: [what role is assigned and why]
+- Task: [what action is being requested]
+- Constraints: [what limits are set]
+- Format: [what output shape is expected]
+- Weaknesses: [what is missing or could cause wrong output]
+
+Recommended fix: [rewritten version with gaps filled]
+```
+
+**Adapt output format:**
+```
+Original ([source tool]): [original prompt]
+
+Adapted for [target tool]:
+[rewritten prompt using target tool syntax and best practices]
+
+Key changes made:
+- [change 1 and why]
+- [change 2 and why]
+```
+
+**Split output format:**
+```
+Original prompt: [paste]
+
+This prompt is doing [N] things. Split into [N] sequential prompts:
+
+Prompt 1 — [what it handles]:
+[prompt block]
+
+Prompt 2 — [what it handles]:
+[prompt block]
+
+Run these in order. Each output feeds the next.
+```
