@@ -210,7 +210,7 @@ Prompt Master includes specific profiles for 20+ tools. For anything not on the 
 
 <details>
 
-<summary><h3> View all 20+ tool profiles </h3></summary>
+<summary><h3> Click to view all 20+ tool profiles </h3></summary>
 
 | Tool | Category | What Prompt Master Fixes |
 |------|----------|--------------------------|
@@ -237,9 +237,12 @@ Prompt Master includes specific profiles for 20+ tools. For anything not on the 
 
 ---
 
-## 12 Prompt Templates — Auto-Selected
+## 📐 12 Prompt Templates (Auto-Selected)
 
 Prompt Master picks the right architecture for every task automatically and routes silently — you never see the framework name, just the prompt.
+
+<details>
+<summary><h3> Click to view all 12 templates</h3></summary>
 
 | Template | Best For |
 |----------|----------|
@@ -256,11 +259,13 @@ Prompt Master picks the right architecture for every task automatically and rout
 | **ComfyUI** | Node-based image workflows — positive/negative split per checkpoint |
 | **Prompt Decompiler** | Breaking down, adapting, simplifying, or splitting existing prompts |
 
+</details>
+
 ---
 
-## 5 Safe Techniques Applied When Needed
+## 🛡️ 5 Safe Techniques, Applied When Needed
 
-Prompt Master only applies techniques with reliable, bounded effects. Fabrication-prone techniques like Tree of Thought, Graph of Thought, Universal Self-Consistency, and prompt chaining are explicitly excluded.
+Prompt Master only uses techniques with reliable, bounded effects. Methods known to produce hallucinations or unpredictable output (Tree of Thought, Graph of Thought, Universal Self-Consistency, prompt chaining) are explicitly excluded.
 
 | Technique | What It Does |
 |-----------|-------------|
@@ -272,9 +277,10 @@ Prompt Master only applies techniques with reliable, bounded effects. Fabricatio
 
 ---
 
-## 35 Credit-Killing Patterns Detected (with Before/After Examples)
+## 🚫 35 Credit-Killing Patterns Detected (with Before/After Examples)
 
-### Task Patterns
+<details>
+<summary><h3> Task Patterns (7)</h3></summary>
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
@@ -284,7 +290,12 @@ Prompt Master only applies techniques with reliable, bounded effects. Fabricatio
 | 4 | **Over-permissive agent** | "do whatever it takes" | Explicit allowed + forbidden actions list |
 | 5 | **Emotional task description** | "it's totally broken, fix everything" | "Throws uncaught TypeError on line 43 when `user` is null" |
 | 6 | **Build-the-whole-thing** | "build my entire app" | Break into Prompt 1 (scaffold), Prompt 2 (feature), Prompt 3 (polish) |
-| 7 | **Implicit reference** | "now add the other thing we discussed" | Always restate the full task — never reference "the thing we discussed" |
+| 7 | **Implicit reference** | "now add the other thing we discussed" | Always restate the full task, never reference "the thing we discussed" |
+
+</details>
+
+<details>
+<summary><h3> Context Patterns (6)</h3></summary>
 
 ### Context Patterns
 
@@ -297,7 +308,11 @@ Prompt Master only applies techniques with reliable, bounded effects. Fabricatio
 | 12 | **Undefined audience** | "write something for users" | "Non-technical B2B buyers, no coding knowledge, decision-maker level" |
 | 13 | **No mention of prior failures** | (blank) | "I already tried X and it failed because Y. Do not suggest X." |
 
-### Format Patterns
+</details>
+
+
+<details>
+<summary><h3> Format Patterns (6)</h3></summary>
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
@@ -308,28 +323,39 @@ Prompt Master only applies techniques with reliable, bounded effects. Fabricatio
 | 18 | **No negative prompts (image AI)** | "a portrait of a woman" | Add: "no watermark, no blur, no extra fingers, no distortion, no text" |
 | 19 | **Prose prompt for Midjourney** | Full descriptive sentence | "subject, style, mood, lighting, --ar 16:9 --v 6" |
 
-### Scope Patterns
+</details>
+
+
+<details>
+<summary><h3> Scope Patterns (6)</h3></summary>
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
 | 20 | **No scope boundary** | "fix my app" | "Fix only login form validation in `src/auth.js`. Touch nothing else." |
 | 21 | **No stack constraints** | "build a React component" | "React 18, TypeScript strict, no external libraries, Tailwind only" |
-| 22 | **No stop condition for agents** | "build the whole feature" | Explicit stop conditions + ✅ checkpoint after each step |
+| 22 | **No stop condition for agents** | "build the whole feature" | Explicit stop conditions + checkpoint after each step |
 | 23 | **No file path for IDE AI** | "update the login function" | "Update `handleLogin()` in `src/pages/Login.tsx` only" |
 | 24 | **Wrong template for tool** | GPT-style prose used in Cursor | Adapted to File-Scope Template with path + scope |
 | 25 | **Pasting entire codebase** | Full repo context every prompt | Scoped to relevant function and file only |
 
-### Reasoning Patterns
+</details>
+
+
+<details>
+<summary><h3> Reasoning Patterns (5)</h3></summary>
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
 | 26 | **No CoT for logic task** | "which approach is better?" | "Think through both approaches step by step before recommending" |
-| 27 | **Adding CoT to reasoning models** | "think step by step" sent to o1/o3 | Removed — reasoning models think internally, CoT instructions degrade output |
+| 27 | **Adding CoT to reasoning models** | "think step by step" sent to o1/o3 | Removed, reasoning models think internally and CoT instructions degrade output |
 | 28 | **No self-check on complex output** | (nothing) | "Before finishing, verify output against the constraints above" |
 | 29 | **Expecting inter-session memory** | "you already know my project" | Always re-provide the Memory Block |
 | 30 | **Contradicting prior decisions** | New prompt ignores earlier architecture | Memory Block with all established facts |
 
-### Agentic Patterns
+</details>
+
+<details>
+<summary><h3> Agentic Patterns (5)</h3></summary>
 
 | # | Pattern | Before | After |
 |---|---------|--------|-------|
@@ -339,11 +365,13 @@ Prompt Master only applies techniques with reliable, bounded effects. Fabricatio
 | 34 | **Unlocked filesystem** | No file restrictions | "Only edit files inside `src/`. Do not touch `package.json`, `.env`, or any config file." |
 | 35 | **No human review trigger** | Agent decides everything | "Stop and ask before: deleting any file, adding any dependency, or touching the database schema" |
 
+</details>
+
 ---
 
-## Memory Block System
+## 🧠 Memory Block System
 
-When your conversation has history, Prompt Master automatically extracts prior decisions and prepends a Memory Block so the AI never contradicts earlier work:
+When your conversation has history, Prompt Master pulls out prior decisions and prepends a Memory Block so the AI never contradicts earlier work:
 
 ```
 ## Memory (Carry Forward from Previous Context)
@@ -354,16 +382,16 @@ When your conversation has history, Prompt Master automatically extracts prior d
 - Architecture: no Redux, context API only
 ```
 
-This solves the #1 cause of wasted re-prompts in long sessions.
+This is the single biggest fix for long sessions. Most wasted re-prompts come from the AI forgetting what you already decided.
 
 ---
 
-## 🔗 References
+## 📚 References
 
-- [Anthropic Prompt Engineering Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) — Primary source for Claude-specific patterns
-- [OpenAI Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering) — GPT-4o best practices
-- [Cursor Documentation](https://docs.cursor.com) — IDE-specific context patterns
-- [Midjourney Prompt Reference](https://docs.midjourney.com/docs/prompts) — Image AI parameter guide
+- [Anthropic Prompt Engineering Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview): Primary source for Claude-specific patterns
+- [OpenAI Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering): GPT-4o best practices
+- [Cursor Documentation](https://docs.cursor.com): IDE-specific context patterns
+- [Midjourney Prompt Reference](https://docs.midjourney.com/docs/prompts): Image AI parameter guide
 
 ---
 
