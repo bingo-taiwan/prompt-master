@@ -1,3 +1,5 @@
+> 🌐 **Languages**: English ｜ [正體中文 (Traditional Chinese)](./README.zh-TW.md)
+
 ![](https://s6.imgcdn.dev/YvLVug.png)
 
 <br/>
